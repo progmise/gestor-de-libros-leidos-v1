@@ -1,3 +1,17 @@
+##### Eclipse
+.metadata
+bin/
+tmp/
+Debug/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
 # Prerequisites
 *.d
 
@@ -30,3 +44,9 @@
 *.exe
 *.out
 *.app
+
+# CDT-specific (C/C++ Development Tooling)
+.cproject
+
+# Typically, this file would be tracked if it contains build/dependency configurations:
+.project
