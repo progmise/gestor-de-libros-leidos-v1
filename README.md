@@ -1,6 +1,6 @@
 ![](/docs/images/logo-fiuba.png?raw=true)
 
-El eterno dilema del lector 
+## El eterno dilema del lector 
 
 Algoritmos y programación II - 2C2022 Trabajo práctico Nº1 - Individual 
 
@@ -8,13 +8,13 @@ Algoritmos y programación II - 2C2022 Trabajo práctico Nº1 - Individual
 
 ![](/docs/images/separador.png?raw=true)
 
-*Introducción*
+### *Introducción*
 
 A la hora de leer no todos tenemos nuestros gustos completamente definidos por lo que enfrentarnos a la temida pregunta ¿Cuál es tu género o libro favorito? Puede ser una verdadera pesadilla. Cansados de no saber responder esta pregunta los ayudantes de algoritmos 2 decidieron pedirle ayuda a los estudiantes de dicha materia.  
 
 ![](/docs/images/separador.png?raw=true)
 
-*Enunciado*
+### *Enunciado*
 
 Para poder ayudar a salir a los ayudantes de este dilema y aprovechando que es una materia de programación se deberá hacer una aplicación en la que se ayudará a gestionar los libros leídos.  
 
@@ -22,12 +22,13 @@ Primero se cargaron todos los libros leídos en un archivo al que se nombró **l
 
 **título,género,puntaje** 
 
-Por ejemplo:** 
-
-Salvajes,R,45 Narnia,A,5
-
-Un mundo complejo,C,0 … 
-
+Por ejemplo:
+```
+Salvajes,R,45
+Narnia,A,5
+Un mundo complejo,C,0
+… 
+```
 A la hora de modificar y leer el archivo es importante tener en cuenta que el título de un libro **puede tener espacios**, el puntaje asociado a cada libro es un **número positivo que va desde 0 hasta 100**[^1] y los géneros respetan la siguiente nomenclatura:  
 
 
@@ -94,7 +95,7 @@ Al terminar de usar el programa se deberá actualizar[^4] el archivo con los val
 
 ![](/docs/images/separador.png?raw=true)
 
-*Aclaraciones*
+### *Aclaraciones*
 
 - El trabajo es de carácter **individual**. 
 - El trabajo no cuenta con reentrega. 
@@ -108,7 +109,7 @@ Al terminar de usar el programa se deberá actualizar[^4] el archivo con los val
 
 ![](/docs/images/separador.png?raw=true)
 
-*¿Qué se evaluará?*
+### *¿Qué se evaluará?*
 
 - Compilación  
 - Funcionalidad 
@@ -123,11 +124,13 @@ Al terminar de usar el programa se deberá actualizar[^4] el archivo con los val
 
 ![](/docs/images/separador.png?raw=true)
 
-*Normas de entrega*
+### *Normas de entrega*
 
 Se deberá subir al campus un único archivo comprimido (.zip o .rar) en la sección TPs.  Este archivo deberá tener un nombre formado de la siguiente manera:  
 
-**Padron\_Apellido\_TP1** Por ejemplo: 
+**Padron\_Apellido\_TP1**
+
+Por ejemplo: 
 
 106204\_Perez\_TP1.zip 
 
