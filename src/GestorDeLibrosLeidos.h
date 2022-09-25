@@ -150,21 +150,21 @@ void mostrarLibroFavorito(Libro ** libros, int cantidadDeLibros);
 
 /*
  * PRE:  libros debe ser un vector no vacío de punteros a Libro inicializado.
- * 		 cantidadDeLibrosConMenorPuntaje debe ser un entero mayor a 0
+ * 		 cantidadDeLibros y cantidadDeLibrosConMenorPuntaje debes ser enteros mayores a 0
  * POST: Imprime por consola los tres titulos de libros con los menores puntajes.
  * 		 Si hay un empate en el tercer puesto se mostrará el título que aparecería
  * 		 primero si fuera en orden alfabético
  */
-void mostrarLibrosConMenorPuntaje(Libro ** libros, int cantidadDeLibrosConMenorPuntaje);
+void mostrarLibrosConMenorPuntaje(Libro ** libros, int cantidadDeLibros, int cantidadDeLibrosConMenorPuntaje);
 
 /*
  * PRE:  generos debe ser un vector no vacío de punteros a Genero inicializado.
- * 		 cantidadDeGeneros debe ser un entero mayor a 0
+ * 		 cantidadDeGeneros y cantidadDeLibros deben ser enteros mayores a 0
  * POST: Imprime por consola el genero que aparece más veces, en relación a
  * 		 la cantidadDeLibros de cada genero. Si hay un empate se muestran todos
- * 		 los que compartan dicho máximo valor de cantidadDeLibros
+ * 		 los que compartan dicho máximo valor de cantidadDeLibros de cada genero
  */
-void mostrarGeneroMasLeido(Genero ** generos, int cantidadDeGeneros);
+void mostrarGeneroMasLeido(Genero ** generos, int cantidadDeGeneros, int cantidadDeLibros);
 
 /*
  * PRE:  generos debe ser un vector no vacío de punteros a Genero inicializado.
