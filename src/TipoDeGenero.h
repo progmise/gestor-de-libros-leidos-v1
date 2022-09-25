@@ -1,8 +1,6 @@
 #ifndef TIPODEGENERO_H_
 #define TIPODEGENERO_H_
 
-#include <string>
-
 enum TipoDeGenero {
 	A,
 	C,

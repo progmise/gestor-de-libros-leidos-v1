@@ -5,12 +5,13 @@ using namespace std;
 string ** redimensionarMatriz(string ** registros, int cantidadDeFilas,
 							  int cantidadDeColumnas, int anteriorCantidadDeFilas) {
 	string ** registrosRedimensionados = new string*[cantidadDeFilas];
+	string * registro = nullptr;
 
 	for (int i = 0; i < cantidadDeFilas; i++) {
 		registrosRedimensionados[i] = new string[cantidadDeColumnas];
 
 		if (registros != NULL && i < anteriorCantidadDeFilas) {
-			string * registro = registros[i];
+			registro = registros[i];
 
 			for (int j = 0; j < cantidadDeColumnas; j++) {
 				registrosRedimensionados[i][j] = registro[j];
@@ -72,7 +73,7 @@ string ** leerArchivoCsv(string rutaDeArchivo, int & cantidadDeRegistros, int ca
 						 int & tamanioDeVector, bool hayQueOmitirEncabezados) {
 	string ** registros = nullptr;
 	tamanioDeVector = MINIMO_TAMANIO;
-	fstream archivo (rutaDeArchivo, ios::in);
+	fstream archivo(rutaDeArchivo, ios::in);
 
 	registros = redimensionarMatriz(
 		registros,
@@ -92,13 +93,14 @@ string ** leerArchivoCsv(string rutaDeArchivo, int & cantidadDeRegistros, int ca
     }
 
 	string fila, dato;
+	int indice = 0;
 
 	do {
 		getline(archivo, fila);
 
 		if (!fila.empty() && !hayQueOmitirEncabezados) {
-			stringstream buffer (fila);
-			int indice = 0;
+			stringstream buffer(fila);
+			indice = 0;
 
 			while (getline(buffer, dato, ',') && indice < cantidadDeDatos) {
 				registros[cantidadDeRegistros][indice] = dato;

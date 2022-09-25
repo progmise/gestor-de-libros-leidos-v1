@@ -75,10 +75,10 @@ int buscarPorBusquedaBinaria(Libro ** libros, int inicio, int fin, string titulo
 	if (inicio <= fin) {
 		centro = (fin + inicio) / 2;
 
-		if ((libros[centro]->titulo.compare(tituloBuscado)) == 0) {
+		if ((libros[centro] -> titulo.compare(tituloBuscado)) == 0) {
 			return centro;
 
-		} else if ((tituloBuscado.compare(libros[centro]->titulo)) < 0) {
+		} else if ((tituloBuscado.compare(libros[centro] -> titulo)) < 0) {
 			return buscarPorBusquedaBinaria(libros, inicio, centro - 1, tituloBuscado);
 
 		} else {
@@ -92,7 +92,7 @@ int buscarPorBusquedaBinaria(Libro ** libros, int inicio, int fin, string titulo
 void ordenarPorBurbuja(Genero ** generos, int cantidadDeGeneros) {
 	for (int i = 0; i < cantidadDeGeneros - 1; i++) {
 		for (int j = 0; j < cantidadDeGeneros - i - 1; j++) {
-			if (generos[j]->cantidadDeLibros < generos[j + 1]->cantidadDeLibros) {
+			if (generos[j] -> cantidadDeLibros < generos[j + 1] -> cantidadDeLibros) {
 				intercambiar(&generos[j], &generos[j + 1]);
 			}
 		}
@@ -107,8 +107,8 @@ void ordenarPorInsercion(Libro ** libros, int cantidadDeLibros) {
 		aux = libros[i];
 		j = i - 1;
 
-		while (j >= 0 && (libros[j]->puntaje > aux->puntaje ||
-			   (libros[j]->puntaje == aux->puntaje && libros[j]->titulo.compare(aux->titulo) > 0))) {
+		while (j >= 0 && (libros[j] -> puntaje > aux -> puntaje ||
+			   (libros[j] -> puntaje == aux -> puntaje && libros[j] -> titulo.compare(aux -> titulo) > 0))) {
 			libros[j + 1] = libros[j];
 			j -= 1;
 		}
@@ -119,10 +119,11 @@ void ordenarPorInsercion(Libro ** libros, int cantidadDeLibros) {
 
 Libro ** redimensionarVector(Libro ** libros, int tamanioDeVector, int cantidadDeLibros) {
 	Libro ** librosRedimensionados = new Libro*[tamanioDeVector];
+	Libro * libro = nullptr;
 
 	for (int i = 0; i < tamanioDeVector; i++) {
 		if (i < cantidadDeLibros) {
-			Libro * libro = libros[i];
+			libro = libros[i];
 
 			librosRedimensionados[i] = libro;
 		}
@@ -139,7 +140,7 @@ Genero * ingresarGenero(Genero ** generos, int cantidadDeGeneros) {
 	int opcion = 0;
 
 	for (int i = 0; i < cantidadDeGeneros; i++) {
-		descripciones[i] = generos[i]->descripcion;
+		descripciones[i] = generos[i] -> descripcion;
 	}
 
 	mostrarMensaje("GENEROS");
@@ -156,9 +157,9 @@ Genero ** generarGeneros(string * tiposDeGeneros, int cantidadDeGeneros) {
 
 	for (int i = 0; i < cantidadDeGeneros; i++) {
 		genero = new Genero;
-		genero->tipo = obtenerEnum(tiposDeGeneros[i]);
-		genero->descripcion = obtenerValor(genero->tipo);
-		genero->cantidadDeLibros = 0;
+		genero -> tipo = obtenerEnum(tiposDeGeneros[i]);
+		genero -> descripcion = obtenerValor(genero -> tipo);
+		genero -> cantidadDeLibros = 0;
 
 		generos[i] = genero;
 	}
@@ -174,8 +175,8 @@ Genero * asignarGenero(Genero ** generos, int cantidadDeGeneros, string tipoDeGe
 	while (!seEncontroGenero && indice < cantidadDeGeneros) {
 		genero = generos[indice];
 
-		if (genero->tipo == obtenerEnum(tipoDeGenero)) {
-			genero->cantidadDeLibros++;
+		if (genero -> tipo == obtenerEnum(tipoDeGenero)) {
+			genero -> cantidadDeLibros++;
 			seEncontroGenero = true;
 
 		} else {
@@ -195,9 +196,9 @@ Libro ** cargarLibros(string ** registros, int cantidadDeLibros, int tamanioDeVe
 
 	for (int i = 0; i < cantidadDeLibros; i++) {
 		libro = new Libro;
-		libro->titulo = registros[i][0];
-		libro->genero = asignarGenero(generos, cantidadDeGeneros, registros[i][1]);
-		libro->puntaje = atoi(registros[i][2].c_str());
+		libro -> titulo = registros[i][0];
+		libro -> genero = asignarGenero(generos, cantidadDeGeneros, registros[i][1]);
+		libro -> puntaje = atoi(registros[i][2].c_str());
 		libros[i] = libro;
 
 		ordenarPorInsercion(libros, i + 1);
@@ -221,8 +222,9 @@ void listarLibros(Libro ** libros, int cantidadDeLibros) {
 	for (int i = 0; i < cantidadDeLibros; i++) {
 		libroFormateado = new string();
 
-		buffer << i + 1 << ". " << libros[i]->titulo << " - " << libros[i]->genero->descripcion
-			   << " - " << libros[i]->puntaje << endl;
+		buffer << i + 1 << ". " << "Nombre: " << libros[i] -> titulo << " - "
+			   << "Género: " << libros[i] -> genero -> descripcion << " - "
+			   << "Puntaje: " << libros[i] -> puntaje << endl;
 
 		*libroFormateado = string(buffer.str());
 
@@ -266,12 +268,12 @@ void agregarLibro(Libro ** libros, int & tamanioDeVector, int & cantidadDeLibros
 	genero = ingresarGenero(generos, cantidadDeGeneros);
 	puntaje = ingresarPuntaje(PUNTAJE_MINIMO, PUNTAJE_MAXIMO);
 
-	genero->cantidadDeLibros++;
+	genero -> cantidadDeLibros++;
 
 	libro = new Libro;
-	libro->titulo = titulo;
-	libro->genero = genero;
-	libro->puntaje = puntaje;
+	libro -> titulo = titulo;
+	libro -> genero = genero;
+	libro -> puntaje = puntaje;
 
 	if (cantidadDeLibros == tamanioDeVector - 1) {
 		tamanioDeVector *= 2;
@@ -304,20 +306,21 @@ void editarPuntaje(Libro ** libros, int cantidadDeLibros) {
 	} while (noExisteTitulo);
 
 	puntaje = ingresarPuntaje(PUNTAJE_MINIMO, PUNTAJE_MAXIMO);
-	libros[indice]->puntaje = puntaje;
+	libros[indice] -> puntaje = puntaje;
 }
 
 void mostrarLibroFavorito(Libro ** libros, int cantidadDeLibros) {
 	Libro ** librosFavoritos = new Libro*[cantidadDeLibros];
+	Libro * libro = nullptr;
 	int indiceDeLibros = cantidadDeLibros - 1;
 	int cantidadDeLibrosFavoritos = 0;
-	int mayorPuntaje = libros[indiceDeLibros]->puntaje;
+	int mayorPuntaje = libros[indiceDeLibros] -> puntaje;
 	bool hayLibrosConMismoPuntaje = true;
 
 	while (hayLibrosConMismoPuntaje && indiceDeLibros >= 0) {
-		Libro * libro = libros[indiceDeLibros];
+		libro = libros[indiceDeLibros];
 
-		if (libro->puntaje == mayorPuntaje) {
+		if (libro -> puntaje == mayorPuntaje) {
 			librosFavoritos[cantidadDeLibrosFavoritos] = libro;
 			indiceDeLibros--;
 			cantidadDeLibrosFavoritos++;
@@ -329,28 +332,33 @@ void mostrarLibroFavorito(Libro ** libros, int cantidadDeLibros) {
 		}
 	}
 
+	cout << "\nEl libro favorito es: " << endl;
 	listarLibros(librosFavoritos, cantidadDeLibrosFavoritos);
 
 	delete [] librosFavoritos;
 }
 
 void mostrarLibrosConMenorPuntaje(Libro ** libros, int cantidadDeLibrosConMenorPuntaje) {
+	cout << "\nLos " << cantidadDeLibrosConMenorPuntaje << " libros con menor puntaje son: "
+		 << endl;
 	listarLibros(libros, cantidadDeLibrosConMenorPuntaje);
 }
 
 void mostrarGeneroMasLeido(Genero ** generos, int cantidadDeGeneros) {
+	Genero * genero = nullptr;
 	int indice = 0;
-	int cantidadDeAparicionesMaxima = generos[indice]->cantidadDeLibros;
+	int cantidadDeAparicionesMaxima = generos[indice] -> cantidadDeLibros;
 	bool hayGenerosConMismoPuntaje = true;
 
-	cout << endl;
+	cout << "\nEl género más leído es: \n" << endl;
 
 	while (hayGenerosConMismoPuntaje && indice < cantidadDeGeneros) {
-		Genero * genero = generos[indice];
+		genero = generos[indice];
 
 		if (genero->cantidadDeLibros == cantidadDeAparicionesMaxima) {
 			indice++;
-			cout << genero->descripcion << " - " << genero->cantidadDeLibros << endl;
+			cout << "'" << genero -> descripcion << "' con una cantidad de "
+				 << genero -> cantidadDeLibros << " libros" << endl;
 
 		} else {
 			hayGenerosConMismoPuntaje = false;
@@ -359,23 +367,26 @@ void mostrarGeneroMasLeido(Genero ** generos, int cantidadDeGeneros) {
 }
 
 void mostrarGeneroFavorito(Genero ** generos, int cantidadDeGeneros, int cantidadTotalDeLibros) {
+	Genero * genero = nullptr;
 	int indice = 0;
 	float mayorPromedioDeGeneros = redondear(
-		(float)(generos[indice]->cantidadDeLibros * 100) / (float)cantidadTotalDeLibros
+		(float)(generos[indice] -> cantidadDeLibros * 100) / (float)cantidadTotalDeLibros
 	);
+	float promedioDeGenero = 0.0;
 	bool hayGenerosConMismoPromedio = true;
 
-	cout << endl;
+	cout << "\nEl género favorito es: \n" << endl;
 
 	while (hayGenerosConMismoPromedio && indice < cantidadDeGeneros) {
-		Genero * genero = generos[indice];
-		float promedioDeGenero = redondear(
-			(float)(genero->cantidadDeLibros * 100) / (float)cantidadTotalDeLibros
+		genero = generos[indice];
+		promedioDeGenero = redondear(
+			(float)(genero -> cantidadDeLibros * 100) / (float)cantidadTotalDeLibros
 		);
 
 		if (promedioDeGenero == mayorPromedioDeGeneros) {
 			indice++;
-			cout << genero->descripcion << " - " << promedioDeGenero << endl;
+			cout << "'" << genero -> descripcion << "' con un promedio de "
+				 << promedioDeGenero << endl;
 
 		} else {
 			hayGenerosConMismoPromedio = false;
@@ -389,9 +400,9 @@ void guardarLibros(string ** encabezados, Libro ** libros,
 
 	for (int i = 0; i < cantidadDeLibros; i++) {
 		registros[i] = new string[CANTIDAD_DE_DATOS];
-		registros[i][0] = libros[i]->titulo;
-		registros[i][1] = obtenerLlave(libros[i]->genero->tipo);
-		registros[i][2] = to_string(libros[i]->puntaje);
+		registros[i][0] = libros[i] -> titulo;
+		registros[i][1] = obtenerLlave(libros[i] -> genero -> tipo);
+		registros[i][2] = to_string(libros[i] -> puntaje);
 
 		delete libros[i];
 	}
