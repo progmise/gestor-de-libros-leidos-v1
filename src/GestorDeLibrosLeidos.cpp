@@ -222,8 +222,6 @@ Libro ** cargarLibros(string ** registros, Libro ** librosOrdenadosPorNombre, in
 		ordenarPorInsercionPorPuntaje(libros, i + 1);
 		ordenarPorInsercionPorNombre(librosOrdenadosPorNombre, i+ 1);
 		ordenarPorBurbuja(generos, cantidadDeGeneros);
-
-		cout << "Libro N°" << i + 1 << endl;
 	}
 
 	for (int i = 0; i < tamanioDeVector; i++) {
