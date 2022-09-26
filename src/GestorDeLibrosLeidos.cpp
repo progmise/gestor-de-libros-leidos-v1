@@ -72,8 +72,8 @@ void intercambiar(Genero ** p, Genero ** q) {
 int buscarPorBusquedaBinaria(Libro ** libros, int inicio, int fin, string tituloBuscado) {
 	int centro;
 
-	if (inicio <= fin) {
-		centro = (fin + inicio) / 2;
+	if (fin >= inicio) {
+		centro = inicio + (fin - inicio) / 2;
 
 		if ((libros[centro] -> titulo.compare(tituloBuscado)) == 0) {
 			return centro;
@@ -99,7 +99,24 @@ void ordenarPorBurbuja(Genero ** generos, int cantidadDeGeneros) {
 	}
 }
 
-void ordenarPorInsercion(Libro ** libros, int cantidadDeLibros) {
+void ordenarPorInsercionPorNombre(Libro ** libros, int cantidadDeLibros) {
+	Libro * aux = nullptr;
+	int i, j;
+
+	for (i = 1; i < cantidadDeLibros; i++) {
+		aux = libros[i];
+		j = i - 1;
+
+		while (j >= 0 && (libros[j] -> titulo.compare(aux -> titulo) > 0)) {
+			libros[j + 1] = libros[j];
+			j -= 1;
+		}
+
+		libros[j + 1] = aux;
+	}
+}
+
+void ordenarPorInsercionPorPuntaje(Libro ** libros, int cantidadDeLibros) {
 	Libro * aux = nullptr;
 	int i, j;
 
@@ -187,8 +204,8 @@ Genero * asignarGenero(Genero ** generos, int cantidadDeGeneros, string tipoDeGe
 	return genero;
 }
 
-Libro ** cargarLibros(string ** registros, int cantidadDeLibros, int tamanioDeVector,
-					  Genero ** generos, int cantidadDeGeneros) {
+Libro ** cargarLibros(string ** registros, Libro ** librosOrdenadosPorNombre, int cantidadDeLibros,
+					  int tamanioDeVector, Genero ** generos, int cantidadDeGeneros) {
 	Libro ** libros = nullptr;
 	Libro * libro = nullptr;
 
@@ -200,9 +217,13 @@ Libro ** cargarLibros(string ** registros, int cantidadDeLibros, int tamanioDeVe
 		libro -> genero = asignarGenero(generos, cantidadDeGeneros, registros[i][1]);
 		libro -> puntaje = atoi(registros[i][2].c_str());
 		libros[i] = libro;
+		librosOrdenadosPorNombre[i] = libro;
 
-		ordenarPorInsercion(libros, i + 1);
+		ordenarPorInsercionPorPuntaje(libros, i + 1);
+		ordenarPorInsercionPorNombre(librosOrdenadosPorNombre, i+ 1);
 		ordenarPorBurbuja(generos, cantidadDeGeneros);
+
+		cout << "Libro N°" << i + 1 << endl;
 	}
 
 	for (int i = 0; i < tamanioDeVector; i++) {
@@ -249,8 +270,8 @@ void listarLibros(Libro ** libros, int cantidadDeLibros) {
 	}
 }
 
-void agregarLibro(Libro ** libros, int & tamanioDeVector, int & cantidadDeLibros,
-				  Genero ** generos, int cantidadDeGeneros) {
+void agregarLibro(Libro ** libros, Libro ** librosOrdenadosPorNombre, int & tamanioDeVector,
+				  int & cantidadDeLibros, Genero ** generos, int cantidadDeGeneros) {
 	Libro * libro = nullptr;
 	Genero * genero = nullptr;
 	string titulo;
@@ -262,7 +283,12 @@ void agregarLibro(Libro ** libros, int & tamanioDeVector, int & cantidadDeLibros
 		titulo = ingresarTitulo();
 
 		if (cantidadDeLibros != 0) {
-			indice = buscarPorBusquedaBinaria(libros, 0, cantidadDeLibros, titulo);
+			indice = buscarPorBusquedaBinaria(
+				librosOrdenadosPorNombre,
+				0,
+				cantidadDeLibros,
+				titulo
+			);
 		}
 
 		if (indice == -1 || cantidadDeLibros == 0) {
@@ -286,16 +312,23 @@ void agregarLibro(Libro ** libros, int & tamanioDeVector, int & cantidadDeLibros
 	if (cantidadDeLibros == tamanioDeVector - 1) {
 		tamanioDeVector *= 2;
 		libros = redimensionarVector(libros, tamanioDeVector, cantidadDeLibros);
+		librosOrdenadosPorNombre = redimensionarVector(
+			librosOrdenadosPorNombre,
+			tamanioDeVector,
+			cantidadDeLibros
+		);
 	}
 
 	libros[cantidadDeLibros] = libro;
+	librosOrdenadosPorNombre[cantidadDeLibros] = libro;
 	cantidadDeLibros++;
 
-	ordenarPorInsercion(libros, cantidadDeLibros);
+	ordenarPorInsercionPorPuntaje(libros, cantidadDeLibros);
+	ordenarPorInsercionPorNombre(librosOrdenadosPorNombre, cantidadDeLibros);
 	ordenarPorBurbuja(generos, cantidadDeGeneros);
 }
 
-void editarPuntaje(Libro ** libros, int cantidadDeLibros) {
+void editarPuntaje(Libro ** libros, Libro ** librosOrdenadosPorNombre, int cantidadDeLibros) {
 	if (cantidadDeLibros != 0) {
 		string titulo;
 		int puntaje = 0;
@@ -304,7 +337,12 @@ void editarPuntaje(Libro ** libros, int cantidadDeLibros) {
 
 		do {
 			titulo = ingresarTitulo();
-			indice = buscarPorBusquedaBinaria(libros, 0, cantidadDeLibros, titulo);
+			indice = buscarPorBusquedaBinaria(
+				librosOrdenadosPorNombre,
+				0,
+				cantidadDeLibros,
+				titulo
+			);
 
 			if (indice != -1) {
 				noExisteTitulo = false;
@@ -315,7 +353,9 @@ void editarPuntaje(Libro ** libros, int cantidadDeLibros) {
 		} while (noExisteTitulo);
 
 		puntaje = ingresarPuntaje(PUNTAJE_MINIMO, PUNTAJE_MAXIMO);
-		libros[indice] -> puntaje = puntaje;
+		librosOrdenadosPorNombre[indice] -> puntaje = puntaje;
+
+		ordenarPorInsercionPorPuntaje(libros, cantidadDeLibros);
 
 	} else {
 		cout << "\n¡Aún no hay libros cargados para editar!" << endl;
@@ -339,7 +379,7 @@ void mostrarLibroFavorito(Libro ** libros, int cantidadDeLibros) {
 				indiceDeLibros--;
 				cantidadDeLibrosFavoritos++;
 
-				ordenarPorInsercion(librosFavoritos, cantidadDeLibrosFavoritos);
+				ordenarPorInsercionPorPuntaje(librosFavoritos, cantidadDeLibrosFavoritos);
 
 			} else {
 				hayLibrosConMismoPuntaje = false;
@@ -488,6 +528,7 @@ void iniciar() {
 	string ** encabezados = nullptr;
 	string ** registros = nullptr;
 	Libro ** libros = nullptr;
+	Libro ** librosOrdenadosPorNombre = nullptr;
 	Genero ** generos = nullptr;
 	int tamanioDeVector = 0;
 	int cantidadDeLibros = 0;
@@ -524,8 +565,12 @@ void iniciar() {
 	delete [] registrosConEncabezados;
 
 	generos = generarGeneros(tiposDeGeneros, cantidadDeGeneros);
+
+	librosOrdenadosPorNombre = new Libro*[tamanioDeVector];
+
 	libros = cargarLibros(
 		registros,
+		librosOrdenadosPorNombre,
 		cantidadDeLibros,
 		tamanioDeVector,
 		generos,
@@ -545,6 +590,7 @@ void iniciar() {
 			case 2:
 				agregarLibro(
 					libros,
+					librosOrdenadosPorNombre,
 					tamanioDeVector,
 					cantidadDeLibros,
 					generos,
@@ -552,7 +598,7 @@ void iniciar() {
 				);
 				break;
 			case 3:
-				editarPuntaje(libros, cantidadDeLibros);
+				editarPuntaje(libros, librosOrdenadosPorNombre, cantidadDeLibros);
 				break;
 			case 4:
 				mostrarLibroFavorito(libros, cantidadDeLibros);
@@ -580,6 +626,8 @@ void iniciar() {
 	} while(opcion != 8);
 
 	mostrarDespedida();
+
+	delete [] librosOrdenadosPorNombre;
 
 	for (int i = 0; i < cantidadDeGeneros; i++) {
 		delete generos[i];

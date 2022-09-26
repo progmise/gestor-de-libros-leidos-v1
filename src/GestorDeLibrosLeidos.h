@@ -12,7 +12,7 @@ const int CANTIDAD_DE_DATOS = 3;
 const int CANTIDAD_DE_LIBROS_CON_MENOR_PUNTAJE = 3;
 const int PUNTAJE_MINIMO = 0;
 const int PUNTAJE_MAXIMO = 100;
-const std::string RUTA_DE_ARCHIVO = "data/libros.csv";
+const std::string RUTA_DE_ARCHIVO = "data/libros-grande.csv";
 
 /*
  * PRE:  genero únicamente puede tomar valor de alguno de los siguientes elementos:
@@ -60,11 +60,19 @@ void ordenarPorBurbuja(Genero ** generos, int cantidadDeGeneros);
 /*
  * PRE:  libros debe ser un vector no vacío de punteros a Libro inicializado. cantidadDeLibros
  * 		 debe ser un entero mayor a 0
+ * POST: Ordena, como criteria, de manera ascendente de acuerdo al titulo de cada
+ * 		 elemento del vector
+ */
+void ordenarPorInsercionPorNombre(Libro ** libros, int cantidadDeLibros);
+
+/*
+ * PRE:  libros debe ser un vector no vacío de punteros a Libro inicializado. cantidadDeLibros
+ * 		 debe ser un entero mayor a 0
  * POST: Ordena, como primer criteria, de manera ascendente el vector de punteros a Libro, de
  * 		 acuerdo al puntaje, y como segunda criteria, de manera ascendente de acuerdo al
  * 		 titulo de cada elemento del vector
  */
-void ordenarPorInsercion(Libro ** libros, int cantidadDeLibros);
+void ordenarPorInsercionPorPuntaje(Libro ** libros, int cantidadDeLibros);
 
 /*
  * PRE:  libros debe ser un vector no vacío de punteros a Libro inicializado. tamanioDeVector
@@ -102,13 +110,14 @@ Genero * asignarGenero(Genero ** generos, int cantidadDeGeneros, std::string tip
 
 /*
  * PRE:  registros debe ser una matriz no vacía de strings inicializado.
+ * 		 librosOrdenadosPorNombre debe ser un vector vacío de punteros a Libro inicializado
  * 		 cantidadDeLibros, tamanioDeVector y cantidadDeGeneros deben ser enteros
  * 		 mayores a 0. generos debe ser un vector no vacío de punteros a Genero
  * POST: Devuelve una vector de punteros a Libro inicializado, la cual se basa
  * 		 en los datos almacenados en la matriz registros
  */
-Libro ** cargarLibros(std::string ** registros, int cantidadDeLibros, int tamanioDeVector,
-					  Genero ** generos, int cantidadDeGeneros);
+Libro ** cargarLibros(std::string ** registros, Libro ** librosOrdenadosPorNombre, int cantidadDeLibros,
+					  int tamanioDeVector, Genero ** generos, int cantidadDeGeneros);
 
 /*
  * PRE:  libros debe ser un vector no vacío de punteros a Libro inicializado.
@@ -120,6 +129,7 @@ void listarLibros(Libro ** libros, int cantidadDeLibros);
 
 /*
  * PRE:  libros debe ser un vector no vacío de punteros a Libro inicializado.
+ * 		 librosOrdenadosPorNombre debe ser un vector no vacío de punteros a Libro inicializado
  * 		 tamanioDeVector, cantidadDeLibros y cantidadDeGeneros deben ser enteros
  * 		 mayores a 0. generos debe ser un vector no vacío de punteros a Genero
  * POST: Agrega un libro nuevo, que no exista previamente en libros de acuerdo al
@@ -128,16 +138,17 @@ void listarLibros(Libro ** libros, int cantidadDeLibros);
  * 		 se lleno el vector libros, también actualiza el valor de cantidadDeLibros
  * 		 en 1
  */
-void agregarLibro(Libro ** libros, int & tamanioDeVector, int & cantidadDeLibros,
-				  Genero ** generos, int cantidadDeGeneros);
+void agregarLibro(Libro ** libros, Libro ** librosOrdenadosPorNombre, int & tamanioDeVector,
+				  int & cantidadDeLibros, Genero ** generos, int cantidadDeGeneros);
 
 /*
  * PRE:  libros debe ser un vector no vacío de punteros a Libro inicializado.
+ * 		 librosOrdenadosPorNombre debe ser un vector no vacío de punteros a Libro inicializado
  * 		 cantidadDeLibros debe ser un entero mayor a 0
  * POST: Edita el puntaje de un libro a elección del usuario, de acuerdo al
  * 		 titulo que se ingrese
  */
-void editarPuntaje(Libro ** libros, int cantidadDeLibros);
+void editarPuntaje(Libro ** libros, Libro ** librosOrdenadosPorNombre, int cantidadDeLibros);
 
 /*
  * PRE:  libros debe ser un vector no vacío de punteros a Libro inicializado.
