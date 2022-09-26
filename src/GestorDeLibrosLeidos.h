@@ -12,7 +12,7 @@ const int CANTIDAD_DE_DATOS = 3;
 const int CANTIDAD_DE_LIBROS_CON_MENOR_PUNTAJE = 3;
 const int PUNTAJE_MINIMO = 0;
 const int PUNTAJE_MAXIMO = 100;
-const std::string RUTA_DE_ARCHIVO = "data/libros-grande.csv";
+const std::string RUTA_DE_ARCHIVO = "data/libros.csv";
 
 /*
  * PRE:  genero únicamente puede tomar valor de alguno de los siguientes elementos:
