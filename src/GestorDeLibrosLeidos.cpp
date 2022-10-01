@@ -539,7 +539,7 @@ void iniciar() {
 		cantidadDeLibros,
 		CANTIDAD_DE_DATOS,
 		tamanioDeVector,
-		false
+		false // Si el archivo .csv no tiene headers/encabezados, cambiar el valor a true
 	);
 
 	encabezados = obtenerEncabezados(
